@@ -1,425 +1,132 @@
-```html
-<!DOCTYPE html>
+$ cd "/Users/ome/Desktop/4-1/BME 400 (Thesis)" && python3 - <<'EOF'
+head = r'''<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Exam Routine</title>
-
 <style>
   :root {
-    --bg: #f7f8f6;
-    --card: #ffffff;
-    --ink: #34423d;
-    --muted: #82908a;
-    --line: #e7ebe8;
-
-    --must: #70998a;
-    --must-bg: #edf4f0;
-
-    --opt: #b58b67;
-    --opt-bg: #f7f0e9;
-
-    --sel: #829fbd;
-    --sel-bg: #eef3f8;
-
+    --bg: #f7f8f6; --card: #ffffff; --ink: #34423d; --muted: #82908a; --line: #e7ebe8;
+    --must: #70998a; --must-bg: #edf4f0;
+    --opt: #b58b67; --opt-bg: #f7f0e9;
+    --sel: #829fbd; --sel-bg: #eef3f8;
     --shadow: 0 2px 12px rgba(55, 75, 68, 0.055);
     --shadow-hover: 0 6px 20px rgba(55, 75, 68, 0.09);
   }
-
   @media (prefers-color-scheme: dark) {
     :root {
-      --bg: #18211f;
-      --card: #202b28;
-      --ink: #e3ebe7;
-      --muted: #93a39d;
-      --line: #303c38;
-
-      --must: #91b9aa;
-      --must-bg: #253a34;
-
-      --opt: #d0a982;
-      --opt-bg: #382f27;
-
-      --sel: #9db8d5;
-      --sel-bg: #293642;
-
-      --shadow: 0 3px 14px rgba(0, 0, 0, .16);
-      --shadow-hover: 0 6px 20px rgba(0, 0, 0, .22);
+      --bg: #18211f; --card: #202b28; --ink: #e3ebe7; --muted: #93a39d; --line: #303c38;
+      --must: #91b9aa; --must-bg: #253a34;
+      --opt: #d0a982; --opt-bg: #382f27;
+      --sel: #9db8d5; --sel-bg: #293642;
+      --shadow: 0 3px 14px rgba(0,0,0,.16);
+      --shadow-hover: 0 6px 20px rgba(0,0,0,.22);
     }
   }
-
-  * {
-    box-sizing: border-box;
-  }
-
+  * { box-sizing: border-box; }
   body {
-    margin: 0;
-    background: var(--bg);
-    color: var(--ink);
-    font-family:
-      "Segoe UI",
-      system-ui,
-      -apple-system,
-      BlinkMacSystemFont,
-      "Helvetica Neue",
-      sans-serif;
-    line-height: 1.5;
-    -webkit-font-smoothing: antialiased;
+    margin: 0; background: var(--bg); color: var(--ink);
+    font-family: "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
+    line-height: 1.5; -webkit-font-smoothing: antialiased;
   }
-
-  .wrap {
-    max-width: 700px;
-    margin: 0 auto;
-    padding: 52px 18px 64px;
-  }
-
-  /* ---------- Header ---------- */
-
-  header {
-    text-align: center;
-    margin-bottom: 34px;
-  }
-
-  header h1 {
-    margin: 0;
-    font-size: 2rem;
-    font-weight: 650;
-    letter-spacing: -0.025em;
-  }
-
-  header p {
-    margin: 7px 0 0;
-    color: var(--muted);
-    font-size: .92rem;
-  }
-
-  /* ---------- Rules ---------- */
+  .wrap { max-width: 700px; margin: 0 auto; padding: 52px 18px 64px; }
+  header { text-align: center; margin-bottom: 34px; }
+  header h1 { margin: 0; font-size: 2rem; font-weight: 650; letter-spacing: -0.025em; }
+  header p { margin: 7px 0 0; color: var(--muted); font-size: .92rem; }
 
   .rule {
-    background: var(--card);
-    border: 1px solid var(--line);
-    border-radius: 18px;
-    padding: 18px 20px;
-    box-shadow: var(--shadow);
-    margin-bottom: 28px;
-    font-size: .92rem;
+    background: var(--card); border: 1px solid var(--line); border-radius: 18px;
+    padding: 18px 20px; box-shadow: var(--shadow); margin-bottom: 28px; font-size: .92rem;
   }
-
-  .rule strong {
-    font-weight: 600;
-  }
-
-  .legend {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin-top: 13px;
-  }
-
+  .rule strong { font-weight: 600; }
+  .legend { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 13px; }
   .tag {
-    display: inline-flex;
-    align-items: center;
-    font-size: .68rem;
-    font-weight: 650;
-    letter-spacing: .055em;
-    text-transform: uppercase;
-    padding: 4px 9px;
-    border-radius: 999px;
-    white-space: nowrap;
+    display: inline-flex; align-items: center; font-size: .68rem; font-weight: 650;
+    letter-spacing: .055em; text-transform: uppercase; padding: 4px 9px;
+    border-radius: 999px; white-space: nowrap;
   }
+  .tag.must { background: var(--must-bg); color: var(--must); }
+  .tag.opt  { background: var(--opt-bg);  color: var(--opt); }
 
-  .tag.must {
-    background: var(--must-bg);
-    color: var(--must);
-  }
-
-  .tag.opt {
-    background: var(--opt-bg);
-    color: var(--opt);
-  }
-
-  /* ---------- Exam list ---------- */
-
-  .list {
-    display: grid;
-    gap: 10px;
-  }
-
+  .list { display: grid; gap: 10px; }
   .exam {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-
-    background: var(--card);
-    border: 1px solid var(--line);
-    border-left: 3px solid var(--must);
-    border-radius: 15px;
-
-    padding: 12px 15px;
-    box-shadow: var(--shadow);
-
-    transition:
-      transform .18s ease,
-      box-shadow .18s ease,
-      background .18s ease,
-      opacity .18s ease;
+    display: flex; align-items: center; gap: 15px;
+    background: var(--card); border: 1px solid var(--line); border-left: 3px solid var(--must);
+    border-radius: 15px; padding: 12px 15px; box-shadow: var(--shadow);
+    transition: transform .18s ease, box-shadow .18s ease, background .18s ease, opacity .18s ease;
   }
-
-  .exam.elective {
-    border-left-color: var(--opt);
-    cursor: pointer;
-  }
-
-  .exam.elective:hover {
-    transform: translateY(-1px);
-    box-shadow: var(--shadow-hover);
-  }
-
-  .exam.elective:active {
-    transform: translateY(0);
-  }
-
-  .exam.elective:focus-visible {
-    outline: 2px solid var(--sel);
-    outline-offset: 3px;
-  }
-
-  .exam.elective.picked {
-    border-left-color: var(--sel);
-    background: var(--sel-bg);
-    box-shadow: var(--shadow);
-  }
-
-  .exam.elective.dim {
-    opacity: .42;
-  }
-
-  /* ---------- Date ---------- */
+  .exam.elective { border-left-color: var(--opt); cursor: pointer; }
+  .exam.elective:hover { transform: translateY(-1px); box-shadow: var(--shadow-hover); }
+  .exam.elective:active { transform: translateY(0); }
+  .exam.elective:focus-visible { outline: 2px solid var(--sel); outline-offset: 3px; }
+  .exam.elective.picked { border-left-color: var(--sel); background: var(--sel-bg); }
+  .exam.elective.dim { opacity: .42; }
 
   .date {
-    flex: 0 0 58px;
-    text-align: center;
-
-    background: var(--must-bg);
-    color: var(--must);
-
-    border-radius: 11px;
-    padding: 7px 0;
-
-    line-height: 1.05;
+    flex: 0 0 58px; text-align: center; background: var(--must-bg); color: var(--must);
+    border-radius: 11px; padding: 7px 0; line-height: 1.05;
   }
+  .elective .date { background: var(--opt-bg); color: var(--opt); }
+  .elective.picked .date { background: var(--sel); color: #fff; }
+  .date b { display: block; font-size: 1.32rem; font-weight: 650; }
+  .date span { font-size: .68rem; text-transform: uppercase; letter-spacing: .08em; opacity: .85; }
 
-  .elective .date {
-    background: var(--opt-bg);
-    color: var(--opt);
-  }
-
-  .elective.picked .date {
-    background: var(--sel);
-    color: #fff;
-  }
-
-  .date b {
-    display: block;
-    font-size: 1.32rem;
-    font-weight: 650;
-  }
-
-  .date span {
-    font-size: .68rem;
-    text-transform: uppercase;
-    letter-spacing: .08em;
-    opacity: .85;
-  }
-
-  /* ---------- Exam information ---------- */
-
-  .info {
-    flex: 1;
-    min-width: 0;
-  }
-
-  .info h3 {
-    margin: 0;
-    font-size: .98rem;
-    font-weight: 620;
-  }
-
-  .info p {
-    margin: 1px 0 0;
-    color: var(--muted);
-    font-size: .86rem;
-  }
-
-  /* ---------- Selection check ---------- */
+  .info { flex: 1; min-width: 0; }
+  .info h3 { margin: 0; font-size: .98rem; font-weight: 620; }
+  .info p { margin: 1px 0 0; color: var(--muted); font-size: .86rem; }
 
   .check {
-    flex: 0 0 23px;
-    height: 23px;
-
-    border: 1.5px solid var(--line);
-    border-radius: 50%;
-
-    display: grid;
-    place-items: center;
-
-    font-size: .72rem;
-    color: transparent;
-
-    transition:
-      background .18s ease,
-      border-color .18s ease,
-      color .18s ease;
+    flex: 0 0 23px; height: 23px; border: 1.5px solid var(--line); border-radius: 50%;
+    display: grid; place-items: center; font-size: .72rem; color: transparent;
+    transition: background .18s ease, border-color .18s ease, color .18s ease;
   }
-
-  .elective.picked .check {
-    background: var(--sel);
-    border-color: var(--sel);
-    color: #fff;
-  }
-
-  /* ---------- Personal schedule ---------- */
+  .elective.picked .check { background: var(--sel); border-color: var(--sel); color: #fff; }
 
   .mine {
-    margin-top: 30px;
-
-    background: var(--card);
-    border: 1px solid var(--line);
-    border-radius: 18px;
-
-    padding: 20px 21px;
-    box-shadow: var(--shadow);
+    margin-top: 30px; background: var(--card); border: 1px solid var(--line);
+    border-radius: 18px; padding: 20px 21px; box-shadow: var(--shadow);
   }
-
-  .mine h2 {
-    margin: 0;
-    font-size: 1.02rem;
-    font-weight: 620;
-  }
-
-  .mine .hint {
-    margin: 4px 0 13px;
-    color: var(--muted);
-    font-size: .84rem;
-  }
-
-  .mine ol {
-    margin: 0;
-    padding-left: 21px;
-  }
-
-  .mine li {
-    padding: 3px 0;
-    font-size: .9rem;
-  }
-
-  .mine li strong {
-    font-weight: 620;
-  }
-
-  .mine li small {
-    color: var(--muted);
-    font-size: .82rem;
-  }
-
+  .mine h2 { margin: 0; font-size: 1.02rem; font-weight: 620; }
+  .mine .hint { margin: 4px 0 13px; color: var(--muted); font-size: .84rem; }
+  .mine ol { margin: 0; padding-left: 21px; }
+  .mine li { padding: 3px 0; font-size: .9rem; }
+  .mine li strong { font-weight: 620; }
+  .mine li small { color: var(--muted); font-size: .82rem; }
   .reset {
-    margin-top: 14px;
-
-    background: transparent;
-    border: 1px solid var(--line);
-    color: var(--muted);
-
-    border-radius: 999px;
-    padding: 5px 13px;
-
-    cursor: pointer;
-    font: inherit;
-    font-size: .78rem;
-
-    transition:
-      color .15s ease,
-      border-color .15s ease,
-      background .15s ease;
+    margin-top: 14px; background: transparent; border: 1px solid var(--line); color: var(--muted);
+    border-radius: 999px; padding: 5px 13px; cursor: pointer; font: inherit; font-size: .78rem;
+    transition: color .15s ease, border-color .15s ease, background .15s ease;
   }
+  .reset:hover { color: var(--ink); border-color: var(--muted); background: var(--bg); }
 
-  .reset:hover {
-    color: var(--ink);
-    border-color: var(--muted);
-    background: var(--bg);
-  }
-
-  /* ---------- Footer ---------- */
-
-  footer {
-    text-align: center;
-    margin-top: 28px;
-    color: var(--muted);
-    font-size: .76rem;
-  }
-
-  /* ---------- Mobile ---------- */
+  footer { text-align: center; margin-top: 28px; color: var(--muted); font-size: .76rem; }
 
   @media (max-width: 480px) {
-    .wrap {
-      padding: 38px 14px 50px;
-    }
-
-    header {
-      margin-bottom: 27px;
-    }
-
-    header h1 {
-      font-size: 1.65rem;
-    }
-
-    .rule {
-      padding: 16px;
-      border-radius: 16px;
-    }
-
-    .exam {
-      gap: 12px;
-      padding: 11px 12px;
-    }
-
-    .date {
-      flex-basis: 53px;
-    }
-
-    .date b {
-      font-size: 1.2rem;
-    }
-
-    .info h3 {
-      font-size: .94rem;
-    }
-
-    .info p {
-      font-size: .82rem;
-    }
-
-    .tag {
-      display: none;
-    }
+    .wrap { padding: 38px 14px 50px; }
+    header { margin-bottom: 27px; }
+    header h1 { font-size: 1.65rem; }
+    .rule { padding: 16px; border-radius: 16px; }
+    .exam { gap: 12px; padding: 11px 12px; }
+    .date { flex-basis: 53px; }
+    .date b { font-size: 1.2rem; }
+    .info h3 { font-size: .94rem; }
+    .info p { font-size: .82rem; }
+    .exam .tag { display: none; }
   }
 </style>
 </head>
-
 <body>
-
 <div class="wrap">
-
   <header>
     <h1>Exam Routine</h1>
-    <p>November Examinations</p>
+    <p>November Examinations &middot; 02:00 &ndash; 05:00 PM</p>
   </header>
 
   <div class="rule">
     <strong>How it works:</strong>
     Three exams are compulsory for everyone.
     In addition, choose <strong>any 2 out of the 4</strong> elective exams.
-
     <div class="legend">
       <span class="tag must">Mandatory</span>
       <span class="tag opt">Choose 2 of 4</span>
@@ -430,24 +137,16 @@
 
   <div class="mine">
     <h2>Your personal schedule</h2>
-    <p class="hint" id="hint">
-      Tap two elective exams above to build your own routine.
-    </p>
-
+    <p class="hint" id="hint">Tap two elective exams above to build your own routine.</p>
     <ol id="mine"></ol>
-
-    <button class="reset" id="reset" type="button">
-      Clear selection
-    </button>
+    <button class="reset" id="reset" type="button">Clear selection</button>
   </div>
 
-  <footer>
-    Please verify exam time and venue with the department notice.
-  </footer>
-
+  <footer>All exams: 02:00 &ndash; 05:00 PM. Please verify the venue with the department notice.</footer>
 </div>
 
 <script>
+const TIME = "02:00 – 05:00 PM";
 const exams = [
   { d: "01", code: "BME 403", name: "Imaging",        type: "must" },
   { d: "08", code: "BME 409", name: "Tissue",         type: "opt"  },
@@ -457,22 +156,68 @@ const exams = [
   { d: "21", code: "HUM 415", name: "Ethics",         type: "must" },
   { d: "24", code: "HUM 441", name: "Economics",      type: "must" }
 ];
-
 const MAX = 2;
 
 let picked = new Set();
-
-try {
-  picked = new Set(
-    JSON.parse(localStorage.getItem("picked") || "[]")
-  );
-} catch (e) {}
+try { picked = new Set(JSON.parse(localStorage.getItem("picked") || "[]")); } catch (e) {}
 
 const list = document.getElementById("list");
 const mine = document.getElementById("mine");
 const hint = document.getElementById("hint");
 
 function save() {
-  try {
-    localStorage.setItem(
-```
+  try { localStorage.setItem("picked", JSON.stringify([...picked])); } catch (e) {}
+}
+
+function render() {
+  list.innerHTML = "";
+  exams.forEach(e => {
+    const isOpt = e.type === "opt";
+    const on = picked.has(e.code);
+    const el = document.createElement("div");
+    el.className = "exam" + (isOpt ? " elective" : "") + (on ? " picked" : "") +
+                   (isOpt && !on && picked.size >= MAX ? " dim" : "");
+    el.innerHTML = `
+      <div class="date"><b>${e.d}</b><span>Nov</span></div>
+      <div class="info">
+        <h3>${e.code}</h3>
+        <p>${e.name} &middot; ${TIME}</p>
+      </div>
+      <span class="tag ${e.type}">${isOpt ? "Elective" : "Mandatory"}</span>
+      ${isOpt ? '<div class="check">✓</div>' : ""}`;
+    if (isOpt) {
+      el.tabIndex = 0;
+      el.setAttribute("role", "checkbox");
+      el.setAttribute("aria-checked", on);
+      const toggle = () => {
+        if (picked.has(e.code)) picked.delete(e.code);
+        else if (picked.size < MAX) picked.add(e.code);
+        save(); render();
+      };
+      el.onclick = toggle;
+      el.onkeydown = ev => {
+        if (ev.key === "Enter" || ev.key === " ") { ev.preventDefault(); toggle(); }
+      };
+    }
+    list.appendChild(el);
+  });
+
+  mine.innerHTML = exams
+    .filter(e => e.type === "must" || picked.has(e.code))
+    .map(e => `<li><strong>${e.d} Nov</strong> — ${e.code} <small>(${e.name}) · ${TIME}</small></li>`)
+    .join("");
+
+  hint.textContent = picked.size < MAX
+    ? `Selected ${picked.size} of ${MAX} electives. Tap to choose ${MAX - picked.size} more.`
+    : "All set! This is your complete exam schedule.";
+}
+
+document.getElementById("reset").onclick = () => { picked.clear(); save(); render(); };
+render();
+</script>
+</body>
+</html>
+'''
+open("index.html","w").write(head)
+EOF
+grep -c "</html>" index.html
